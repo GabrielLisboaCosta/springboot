@@ -4,11 +4,11 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.aprendendoweb.cursoSpring.entities.User;
 import com.aprendendoweb.cursoSpring.repositories.UserRepository;
+import com.aprendendoweb.cursoSpring.services.exceptions.ResourceNotFoundException;
 
 @Service
 public class UserService {
@@ -22,7 +22,7 @@ public class UserService {
 	
 	public User findById(Long id) {
 		Optional<User> obj = repository.findById(id);
-		return obj.get();
+		return obj.orElseThrow(() -> new ResourceNotFoundException(id));
 	}
 	
 	public User insert(User obj) {
